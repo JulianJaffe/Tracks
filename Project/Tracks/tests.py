@@ -41,12 +41,14 @@ class SignUpTest(TestCase):
     self.assertEqual(response.status_code, 302)
 
   def test_duplicate_email(self):
-    a = 0
+    a = 1
     try:
-      response = self.c.post('/Tracks/register/',{'firstName':'c','lastName':'c','email':'a@a.a','password':'c','confirm':'b'})
+      response = self.c.post('/Tracks/register/',{'firstName':'c','lastName':'c','email':'a@a.a','password':'c','confirm':'b'},follow=True)
+      print(response.status_code)
+      print(response.redirect_chain)
     except:
-      a = 1
-    self.assertEqual(a, 1)
+      a = 0
+    self.assertEqual(a, 0)
 """
   def test_bad_email(self):
     a = 0
@@ -65,22 +67,24 @@ class SignInTest(TestCase):
 
   def test_sign_in(self):
     response = self.c.post('/Tracks/signin/',{'email':'a@a.a','password':'a'})
-    self.assertEqual(response.status_code, 302)
+    self.assertEqual(response.status_code, 200)
   def test_user_doesnt_exist(self):
     a = 0
     try:
       response = self.c.post('/Tracks/signin/',{'email':'z@z.z','password':'z'})
+      a = response.templates[0].name
     except:
-      a = 1
-    self.assertEqual(a,1)
+      a = '0'
+    self.assertEqual(a, 'Tracks/signin.html')
 
   def test_wrong_passsword(self):
     a = 0
     try:
       response = self.c.post('/Tracks/signin/',{'email':'a@a.a','password':'1'})
+      a = response.templates[0].name
     except:
-      a = 1
-    self.assertEqual(a,1)
+      a = '0'
+    self.assertEqual(a,'Tracks/signin.html')
 
 
 
