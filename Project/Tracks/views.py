@@ -37,7 +37,7 @@ def register(request):
     return render(request, 'Tracks/signup.html', {'form': form})
 
 
-    
+
 def signIn(request):
     # Custom login
     email = password = msg = ''
@@ -115,7 +115,7 @@ def userprofile(request, user_email=None):
 
     elif (request.method == 'POST'):
         form = UserProfileForm(request.POST, instance=temp_instance)
-        if(form.is_valid):
+        if(form.is_valid()):
             try:
                 form.save()
                 return HttpResponseRedirect('/Tracks/userpage/');
@@ -223,7 +223,7 @@ def upload_MP3(request):
     acceptableFormats = ['.mp3']
     if (request.method == 'POST'):
         form = UploadFileForm(request.POST, request.FILES)
-        if (form.is_valid):
+        if (form.is_valid()):
             try:
                 temp_mp3 = request.FILES['file']
                 #check the size of the file
