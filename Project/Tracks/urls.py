@@ -12,5 +12,6 @@ urlpatterns = patterns('',
     url(r'(?i)^signin/?$', views.signIn, name='SignIn'),
     url(r'(?i)^about.html$', views.about, name='About'),
     url(r'(?i)^register/?$', views.register, name='Register'),
-    url(r'(?i)^logout/?$', views.logout_view, name='Logout')
+    url(r'(?i)^logout/?$', views.logout_view, name='Logout'),
+    url(r'(?i)^downbeat/?$', views.downbeat, name='Downbeat')
 )
