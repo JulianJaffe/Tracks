@@ -23,41 +23,40 @@
         </h1>
     </div>
 	<div class="container" style="width:50%">
-{% load myfilters %}
-	<form id="signin" action="" class="form-horizontal" role="form" method="post">
-	{% csrf_token %}
+	<form id="signin" class="form-horizontal" role="form" method="post">
+    {% csrf_token %}
     	<div class="form-group" >
         	<label for="firstname" class="col-sm-2 control-label">First Name:</label>
             <div class="col-sm-10">
-            	{{ form.firstName|addattr:"class: form-control,placeholder: First Name,required: True" }}
+            	<input id="firstName" name="firstName" type="text"  class="form-control" placeholder="First Name"/>
             </div>
         </div>
         <div class="form-group" >
-        	<label for="lastname" class="col-sm-2 control-label">Last Name:</label>
+        	<label for="lastName" class="col-sm-2 control-label">Last Name:</label>
             <div class="col-sm-10">
-            	{{ form.lastName|addattr:"class: form-control,placeholder: Last Name,required: True" }}
+            	<input id="lastName" name="lastName" type="text" class="form-control" placeholder="Last Name"/>
             </div>
         </div>
         <div class="form-group" >
         	<label for="email" class="col-sm-2 control-label">Email Address:</label>
             <div class="col-sm-10">
-            	{{ form.email|addattr:"class: form-control,placeholder: Email,required: True" }}
+            	<input id="email" name="email" type="email" class="form-control" placeholder="Email"/>
         	</div>
         </div>
         <div class="form-group" >
         	<label for="password" class="col-sm-2 control-label" >Password:</label>
             <div class="col-sm-10">
-            	{{ form.password|addattr:"class: form-control,placeholder: Password,required: True" }}
+            	<input id="password" name="password" type="password" class="form-control" placeholder="Password" data-toggle="tooltip" data-placement="top" title="Password must be 154 characters or less and can only contain alphanumeric characters."/>
             </div>
         </div>
         <div class="form-group" >
         	<label for="confirm" class="col-sm-2 control-label">Confirm Password:</label>
             <div class="col-sm-10">
-            	{{ form.confirm|addattr:"class: form-control,placeholder: Confirm Password,required: True" }}
+            	<input id="confirm" name="confirm" type="password" class="form-control" placeholder="Confirm Password"/>
             </div>
         </div>
         <div class="col-sm-offset-2" style="padding-left:5px">
-        	<button type="submit" class="btn btn-default"  >Create Account</button>
+        	<button type="Submit" class="btn btn-default"  >Create Account</button>
         </div>
     </form>
     </div>
@@ -69,18 +68,18 @@
 	</script>
     <script type="text/javascript">
 	function json_request(page, dict, success, failure) {
+		alert(page);
 		$.ajax({
 			type: 'POST',
 			url: page,
 			data: dict,
-			contentType: "application/json",
 			success: success,
 			error: failure
     	});
 	}
 	function createAccount() {
 		json_request(window.location, {email:$("#email").val(), firstname:$("#firstname").val(),lastname:$("#lastname").val(),password:$("#password").val(),confirm:$("#confirm").val()}, function(data) {
-			alert(JSON.stringify(data));}, function(err) { alert("An error was encountered. *DEBUG*" + err.message);});
+			alert(JSON.stringify(data));}, function(err) { alert("An error was encountered. " + err);});
 	}
 </script>
 </body>

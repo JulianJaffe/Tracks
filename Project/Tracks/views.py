@@ -4,7 +4,7 @@ from django.shortcuts import render, render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 # from TracksApp_forms import *
 from Tracks.forms import *
@@ -35,10 +35,9 @@ def register(request):
 ##        lastName = request.POST.get('lastName')
 ##        confirm = request.POST.get('confirm')
         #user = TracksUser.objects.create_user(email, firstName, lastName, confirm, password)
-        return HttpResponseRedirect('/Tracks/upload') #Should be changed to user's profile?
+        return HttpResponseRedirect('/Tracks') #Should be changed to user's profile?
     else:
-        form = TracksUserCreationForm()
-    return render(request, 'Tracks/signup.html', {'form': form})
+        return render(request, 'Tracks/signup.html', {})
 
     
 def signIn(request):
@@ -72,9 +71,9 @@ def signIn(request):
         form = TracksUserSignInForm()
     return render(request, 'Tracks/signin.html', {'form': form})
 
-def logout(request):
+def logout_view(request):
     logout(request)
-    return HttpResponseRedirect('') #should be a log out page instead
+    return HttpResponseRedirect('/Tracks') #should be a log out page instead
 
 def tracks(request):
     return render(request, 'Tracks/tracks.html',{})
@@ -108,3 +107,7 @@ def upload_MP3(request):
         response = HttpResponse('method not post')
         response.status_code = 400;
         return response
+
+def downbeat(request):
+    if (request.method == 'GET'):
+        return render(request, 'Tracks/downbeat.html', {})
