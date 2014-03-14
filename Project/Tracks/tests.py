@@ -82,8 +82,15 @@ class SignInTest(TestCase):
       a = 1
     self.assertEqual(a,1)
 
-"""
+
+
 class UserProfileTest(TestCase):
+    def setUp(self):
+        self.c = Client()
+        response = self.c.post('/Tracks/register/', {'firstName':'a','lastName':'a','email':'a@a.a','password':'a','confirm':'a'})
+
+
+"""
 class TrackTest(TestCase):
 class CollaborationTest(TestCase):
 class UploadFileTest(TestCase):
@@ -96,7 +103,7 @@ class UploadFileTest(TestCase):
 	def test_invalid_file_extension(self):
 		filepathOfMp3 = '~/user_mp3_files/badExt.ogg'
 		#make a request with this file path
-		request = self.assertEqual(self.upload_mp3(request), 'File extension not supported')		
+		request = self.assertEqual(self.upload_mp3(request), 'File extension not supported')
 
 
 	def test_sizeLimitExceeded_file(self):
@@ -113,7 +120,7 @@ class UploadFileTest(TestCase):
 	def test_filenameTooLong_file(self):
 		filepathOfMp3 = '~/user_mp3_files/qweirouqwepiorqwpjfslfj asjkdfhsjkfhiwqehr quiwerh qwiuerh qwuier hqwuierh qwic vhmc hvmc hvcm hv qweruqiwerhqwouiehfskvnkjsadfbkjsadfhjsfhsjkdf wqierhwiuerhqwuierhw uifahsd fuahsdfiu sfhuiasd fhuiasdfhuiasd fhisahfisd fhuias dfhiasf iasdfaidfsadfhasd.mp3'
 		request = self.assertEqual(self.upload_mp3(request), 'form not valid')
-	
+
 	def test_invalidChars_file(self):
 		filepathOfMp3 = '~/user_mp3_files/@#ds!fd.mp3'
 		#make a request with this file path

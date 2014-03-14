@@ -250,16 +250,16 @@ Viewing page of {{ user.firstName }}
             var track1_id = $(this_button).attr("id");
             var select_element = $(this_button).parent().children("select");
             var track2_id = select_element.children(":selected").val();
-            
+
             $.ajax({
                 url: "{{ finalize_collaboration_url }}",
                 type: 'POST',
                 data: {track1_id : track1_id, track2_id : track2_id},
                 success: function (data, textStatus, jqXHR) {
-                    alert(jqXHR.responseText);
+                    //alert(jqXHR.responseText);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    alert(jqXHR.responseText);
+                    //alert(jqXHR.responseText);
                 },
                 async: true
 
