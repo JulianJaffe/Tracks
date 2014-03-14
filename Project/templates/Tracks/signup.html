@@ -29,31 +29,31 @@
     	<div class="form-group" >
         	<label for="firstname" class="col-sm-2 control-label">First Name:</label>
             <div class="col-sm-10">
-            	{{ form.firstName|addattr:"class: form-control,placeholder: First Name" }}
+            	{{ form.firstName|addattr:"class: form-control,placeholder: First Name,required: True" }}
             </div>
         </div>
         <div class="form-group" >
         	<label for="lastname" class="col-sm-2 control-label">Last Name:</label>
             <div class="col-sm-10">
-            	{{ form.lastName|addattr:"class: form-control,placeholder: Last Name" }}
+            	{{ form.lastName|addattr:"class: form-control,placeholder: Last Name,required: True" }}
             </div>
         </div>
         <div class="form-group" >
         	<label for="email" class="col-sm-2 control-label">Email Address:</label>
             <div class="col-sm-10">
-            	{{ form.email|addattr:"class: form-control,placeholder: Email" }}
+            	{{ form.email|addattr:"class: form-control,placeholder: Email,required: True" }}
         	</div>
         </div>
         <div class="form-group" >
         	<label for="password" class="col-sm-2 control-label" >Password:</label>
             <div class="col-sm-10">
-            	{{ form.password|addattr:"class: form-control,placeholder: Password" }}
+            	{{ form.password|addattr:"class: form-control,placeholder: Password,required: True" }}
             </div>
         </div>
         <div class="form-group" >
         	<label for="confirm" class="col-sm-2 control-label">Confirm Password:</label>
             <div class="col-sm-10">
-            	{{ form.confirm|addattr:"class: form-control,placeholder: Confirm Password" }}
+            	{{ form.confirm|addattr:"class: form-control,placeholder: Confirm Password,required: True" }}
             </div>
         </div>
         <div class="col-sm-offset-2" style="padding-left:5px">
