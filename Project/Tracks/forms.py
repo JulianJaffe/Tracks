@@ -31,11 +31,20 @@ class TracksUserCreationForm(forms.ModelForm):
     confirm = forms.CharField(label="Password confirmation",
         widget=forms.PasswordInput,
         help_text="Enter the same password as above, for verification.")
+    cleaned_data = {}
 
     class Meta:
         # Point to TracksUser here instead of default `User`
         model = TracksUser
         fields = ("email", "firstName", "lastName")
+
+    def clean(self):
+      self.cleaned_data = super(TracksUserCreationForm, self).clean()
+      print self.cleaned_data
+      username = self.cleaned_data["email"]
+      self.clean_username()
+      self.clean_confirm()
+      return self.cleaned_data
 
     def clean_username(self):
         # Since User.username is unique, this check is redundant,
