@@ -93,6 +93,25 @@ class UserProfileTest(TestCase):
         self.c = Client()
         response = self.c.post('/Tracks/register/', {'firstName':'a','lastName':'a','email':'a@a.a','password':'a','confirm':'a'})
 
+    def test_going_to_user_profile(self):
+        response = self.c.get('/Tracks/userprofile/')
+        self.assertEqual(response.status_code, 302)
+
+    def test_saving_data_to_user_profile(self):
+        response = self.c.post('/Tracks/userprofile/', {'instrument':'guitar','field2' : 'test data', 'field3' : 'another test data', 'field4' : 'more test data'}, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.redirect_chain) != 0, True)
+
+        response = self.c.post('/Tracks/userprofile/', {'instrument':'guitar','field2' : 'test data', 'field3' : 'another test data', 'field4' : 'more test data'}, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+
+    def test_saving_empty_data(self):
+        response = self.c.post('/Tracks/userprofile/', {'instrument':'','field2' : '', 'field3' : '', 'field4' : ''}, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+
+
 
 """
 class TrackTest(TestCase):
