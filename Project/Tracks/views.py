@@ -4,6 +4,7 @@ from django.shortcuts import render, render_to_response, get_object_or_404
 from django.http import *
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 ## from TracksApp_forms import *
@@ -12,6 +13,7 @@ from Tracks.forms import *
 from Tracks.models import *
 ##from Tracks.models import TracksUser
 ##from Tracks.models import Track
+from models import *
 import os
 ##import sys
 import traceback
@@ -343,4 +345,40 @@ def play_MP3(request, path):
     response['Content-Length'] = os.path.getsize(filepath)
     response['Content-Disposition'] = 'attachment; filename=%s' % path
     return response
+
+@login_required
+@ensure_csrf_cookie
+def record(request):
+    #get user
+    user, is_disabled = TracksUser.get_user_desired_to_be_viewed(request, None)
+    if not is_disabled:
+        return render(request, 'Tracks/record.html', {'user': user})
+    else:
+        return render(request, 'Tracks/disabled')
+
+@login_required
+def handleRecord(request):
+    """
+    Saves a user-recorded blob as an .mp3.
+    """
+    if not request.method == 'POST' or not request.is_ajax():
+        raise Http404
+    file_name = request.POST.get('filename')
+    audio = request.FILES.get('audio')
+    SIZE_LIMIT = 5242880 #Should probably be made global, currently same as upload_mp3's SIZE_LIMIT
+    try:
+        if audio.size > SIZE_LIMIT:
+            #handle size error
+            pass
+        #need to convert from WAV to MP3
+        temp_user, is_disabled = TracksUser.get_user_desired_to_be_viewed(request, None)
+        new_track = Track(user = temp_user, filename=file_name)
+        new_track.handle_upload_file(audio)
+        History.add_history(new_track.user, new_track, ADDED_HISTORY)
+        response = HttpResponse('success')
+        response.status_code = 200;
+        return response
+    except:
+        #handle error
+        pass
 

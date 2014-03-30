@@ -1,0 +1,11 @@
+Tracks need to be able to be renamed
+Need licenses/acknowledgments
+Need size check for user uploads
+Still need to make sure that password match confirm before allowing account creation
+Still need to make sure that email address doesn't already exist before account creation
+
+
+Possible later features:
+Disable play/save until a blob exists (i.e. record has been pressed)
+Change record on toggle to indicate recording is happening
+Add metadata to created .mp3 files (i.e. artist, year, bitrate, etc.)

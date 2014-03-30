@@ -1,0 +1,42 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Audio Recorder</title>
+
+    {% load staticfiles %}
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="{% static "Recorder/recorder.js" %}"></script>
+    <script src="{% static "Recorder/recorderMain.js" %}"></script>
+    <!-- Should be moved to a .css file -->
+    <style>
+        .record{
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: red;
+            border-style: solid;
+            border-width: 2px;
+            border-color: darkgray;
+        }
+        .play{
+            width: 0px;
+            height: 0px;
+            border-style: solid;
+            border-width: 12.5px 0 12.5px 21.7px;
+            border-color: transparent transparent transparent green;
+            -webkit-transfrom:rotate(360);
+            background: transparent;
+        }
+    </style>
+</head>
+    <body>
+            <audio controls autoplay></audio>
+            <fieldset><legend>RECORD AUDIO</legend>
+                <input onclick="toggleRecording(this)" type="button" name="Rec" class="record"/>
+                <input onclick="play()" type="button" name="Play" class="play"/>
+                <input onclick="saveAudio()" type="submit" name="Save" value="Save" />
+            </fieldset>
+    </body>
+</html>
