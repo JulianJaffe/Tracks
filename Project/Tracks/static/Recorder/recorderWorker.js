@@ -13,9 +13,6 @@ var recLength = 0,
         case 'exportWAV':
           exportWAV(e.data.type);
           break;
-        case 'getBuffer':
-          getBuffer();
-          break;
         case 'clear':
           clear();
           break;
@@ -41,13 +38,6 @@ var recLength = 0,
       var audioBlob = new Blob([dataview], { type: type });
 
       this.postMessage(audioBlob);
-    }
-
-    function getBuffer() {
-      var buffers = [];
-      buffers.push( mergeBuffers(recBuffersL, recLength) );
-      buffers.push( mergeBuffers(recBuffersR, recLength) );
-      this.postMessage(buffers);
     }
 
     function clear(){

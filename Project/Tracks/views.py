@@ -319,7 +319,7 @@ def upload_MP3(request):
             return response
 
     except:
-        response = HttpResponse('error with userprofile') # May need to change message sent
+        response = HttpResponse('error with userprofile')  # May need to change message sent
         print(traceback.format_exc())  # for debugging purposes only. DO NOT USE IN PRODUCTION
         response.status_code = 500;
         return response
@@ -372,7 +372,7 @@ def handleRecord(request):
             pass
         #need to convert from WAV to MP3
         temp_user, is_disabled = TracksUser.get_user_desired_to_be_viewed(request, None)
-        new_track = Track(user = temp_user, filename=file_name)
+        new_track = Track(user=temp_user, filename=file_name)
         new_track.handle_upload_file(audio)
         History.add_history(new_track.user, new_track, ADDED_HISTORY)
         response = HttpResponse('success')
@@ -381,4 +381,5 @@ def handleRecord(request):
     except:
         #handle error
         pass
+
 

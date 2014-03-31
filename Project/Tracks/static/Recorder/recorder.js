@@ -1,6 +1,4 @@
-﻿/*
-*/
-/*License (MIT)
+﻿/*License (MIT)
 
 Copyright © 2013 Matt Diamond
             2014 Julian Jaffe
@@ -44,17 +42,6 @@ DEALINGS IN THE SOFTWARE.
     var recording = false,
       currCallback;
 
-    this.node.onaudioprocess = function(e){
-      if (!recording) return;
-      worker.postMessage({
-        command: 'record',
-        buffer: [
-          e.inputBuffer.getChannelData(0),
-          e.inputBuffer.getChannelData(1)
-        ]
-      });
-    }
-
     this.configure = function(cfg){
       for (var prop in cfg){
         if (cfg.hasOwnProperty(prop)){
@@ -75,11 +62,6 @@ DEALINGS IN THE SOFTWARE.
       worker.postMessage({ command: 'clear' });
     }
 
-    this.getBuffers = function(cb) {
-      currCallback = cb || config.callback;
-      worker.postMessage({ command: 'getBuffers' })
-    }
-
     this.exportWAV = function(cb, type){
       currCallback = cb || config.callback;
       type = type || config.type || 'audio/wav';
@@ -90,23 +72,13 @@ DEALINGS IN THE SOFTWARE.
       });
     }
 
-    this.exportMonoWAV = function(cb, type){
-      currCallback = cb || config.callback;
-      type = type || config.type || 'audio/wav';
-      if (!currCallback) throw new Error('Callback not set');
-      worker.postMessage({
-        command: 'exportMonoWAV',
-        type: type
-      });
-    }
-
     worker.onmessage = function(e){
       var blob = e.data;
       currCallback(blob);
     }
 
     source.connect(this.node);
-    this.node.connect(this.context.destination);   // if the script node is not connected to an output the "onaudioprocess" event is not triggered in chrome.
+    this.node.connect(this.context.destination);
   };
 
   Recorder.save = function(blob, filename){
@@ -114,22 +86,19 @@ DEALINGS IN THE SOFTWARE.
       data.append('csrfmiddlewaretoken', csrf_token);
       data.append('filename', filename);
       data.append("audio", blob);
-      //data.submit(function () {
-        $.ajax({
-            url :  "handleRecord",
-            type: 'POST',
-            data: data,
-            contentType: false,
-            processData: false,
-            success: function(data) {
-                //Redirect? Modify UI in place? Notify User?
-            },
-            error: function() {
-                //Notify User, or ignore if no recording?
-            }
-        });
-        //event.preventDefault();
-      //});
+      $.ajax({
+        url :  "handleRecord",
+        type: 'POST',
+          data: data,
+          contentType: false,
+          processData: false,
+          success: function(data) {
+              //Redirect? Modify UI in place? Notify User?
+          },
+          error: function() {
+              //Notify User, or ignore if no recording?
+          }
+      });
   }
 
   window.Recorder = Recorder;
