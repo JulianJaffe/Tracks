@@ -42,6 +42,17 @@ DEALINGS IN THE SOFTWARE.
     var recording = false,
       currCallback;
 
+    this.node.onaudioprocess = function(e){
+      if (!recording) return;
+      worker.postMessage({
+        command: 'record',
+        buffer: [
+          e.inputBuffer.getChannelData(0),
+          e.inputBuffer.getChannelData(1)
+        ]
+      });
+    }
+
     this.configure = function(cfg){
       for (var prop in cfg){
         if (cfg.hasOwnProperty(prop)){
@@ -82,6 +93,10 @@ DEALINGS IN THE SOFTWARE.
   };
 
   Recorder.save = function(blob, filename){
+      /*var url = (window.URL || window.webkitURL).createObjectURL(blob);
+      var link = document.getElementById("save");
+      link.href = url;
+      link.download = filename || 'output.wav';*/
       var data = new FormData();
       data.append('csrfmiddlewaretoken', csrf_token);
       data.append('filename', filename);

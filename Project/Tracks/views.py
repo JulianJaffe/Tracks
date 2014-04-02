@@ -350,7 +350,7 @@ def play_MP3(request, path):
 @ensure_csrf_cookie
 def record(request):
     #get user
-    user, is_disabled = TracksUser.get_user_desired_to_be_viewed(request, None)
+    user, is_disabled = TracksUser.get_desired_user(get_session_for_user(request), None)
     if not is_disabled:
         return render(request, 'Tracks/record.html', {'user': user})
     else:
@@ -371,7 +371,7 @@ def handleRecord(request):
             #handle size error
             pass
         #need to convert from WAV to MP3
-        temp_user, is_disabled = TracksUser.get_user_desired_to_be_viewed(request, None)
+        temp_user, is_disabled = TracksUser.get_desired_user(get_session_for_user(request), None)
         new_track = Track(user=temp_user, filename=file_name)
         new_track.handle_upload_file(audio)
         History.add_history(new_track.user, new_track, ADDED_HISTORY)

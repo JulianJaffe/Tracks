@@ -32,11 +32,12 @@
     </style>
 </head>
     <body>
-            <audio controls autoplay></audio>
-            <fieldset><legend>RECORD AUDIO</legend>
-                <input onclick="toggleRecording(this)" type="button" name="Rec" class="record"/>
-                <input onclick="play()" type="button" name="Play" class="play"/>
-                <input onclick="saveAudio()" type="submit" name="Save" value="Save" />
-            </fieldset>
+        <audio id="audio" controls autoplay></audio>
+        <fieldset><legend>RECORD AUDIO</legend>
+            <input onclick="toggleRecording(this)" type="button" name="Rec" class="record"/>
+            <input onclick="play()" type="button" name="Play" class="play"/>
+            <input onclick="saveAudio()" type="submit" name="Save" value="Save" />
+        </fieldset>
+        <!--<a id="save" href="#">save</a>-->
     </body>
 </html>

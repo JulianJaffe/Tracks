@@ -18,6 +18,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
 var audioContext = new AudioContext();
 var audioRecorder = null;
+var recindex = 0;
 
 function getCookie(name) {
     var cookieValue = null;
@@ -45,7 +46,8 @@ function saveAudio() {
 }
 
 function doneEncoding( blob ) {
-    Recorder.save(blob, 'test.wav');
+    Recorder.save(blob, "recording" + ((recindex<10)?"0":"") + recindex + ".wav");
+    recindex++;
 }
 
 function toggleRecording( e ) {
@@ -69,7 +71,7 @@ function play(){
     }
     audioRecorder.stop();
     audioRecorder.exportWAV(function(s) {
-        document.querySelector('audio').src = window.URL.createObjectURL(s);
+        document.getElementById('audio').src = window.URL.createObjectURL(s);
     });
 }
 
